@@ -501,6 +501,7 @@ function open_single_job(post_id) {
         } else {
             $("#apply-button").attr('href', result.applyUrl);
             $("#refer-button").attr('href', result.referralUrl);
+            $("#refer-button").css('display', 'block');
         }
 
         const share_link = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&amp;src=sdkpreparse`;
