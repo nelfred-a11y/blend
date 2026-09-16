@@ -35,7 +35,7 @@ var experience_level_mapping = {
     "All-Star": "Entry level",
 }
 
-if(page_lang == "es") {
+if (page_lang == "es") {
     experience_level_mapping = {
         Intern: "Nivel Inicial",
         "All - Star": "Nivel Inicial",
@@ -65,7 +65,7 @@ var employee_type_mapping = {
     "Consultant": 'Full time- Contract',
 }
 
-if(page_lang == "es") {
+if (page_lang == "es") {
     employee_type_mapping = {
         'Consult to hire': 'Tiempo Completo- Contrato',
         'Consult to Hire': 'Tiempo Completo- Contrato',
@@ -87,7 +87,6 @@ var userfacing_text_mapping = {
     "Intern": 'Intern',
     'Consult to hire': 'Full time- Contract',
     'Consult to Hire': 'Full time- Contract',
-    //'All-Star': 'New Grad',
     'Associate Analyst': 'Associate Analyst',
     "Analyst": 'Analyst',
     'Senior Analyst': 'Senior Analyst',
@@ -97,14 +96,13 @@ var userfacing_text_mapping = {
     "Canada": "Canada",
     "IDC": "Asia Pacific",
     'Uruguay': 'LATAM',
-    //...experience_level_mapping
 };
 
-if(page_lang == "es") {
+if (page_lang == "es") {
     userfacing_text_mapping = {
-        "Region": "RegiÃ³n",
-        "Work Location": "UbicaciÃ³n",
-        "Capability": "Ãrea de EspecializaciÃ³n",
+        "Region": "Region",
+        "Work Location": "Ubicacion",
+        "Capability": "Area de Especializacion",
         "Placement Type": "Tipo De Contrato",
         "Location Requirement": "Modalidad",
         "Management Level": "Nivel de Experiencia",
@@ -116,13 +114,12 @@ if(page_lang == "es") {
         'Associate Analyst': 'Analista Asociado',
         "Analyst": 'Analista',
         'Senior Analyst': 'Analista Senior',
-        'Lead Analyst': 'Analista LÃ­der',
-        'Americas': 'AmÃ©ricas',
+        'Lead Analyst': 'Analista Lider',
+        'Americas': 'Americas',
         'United States': 'Estados Unidos',
-        "Canada": "CanadÃ¡",
-        "IDC": "Asia PacÃ­fico",
+        "Canada": "Canada",
+        "IDC": "Asia Pacifico",
         'Uruguay': 'LATAM',
-        //...experience_level_mapping
     }
 }
 
@@ -175,6 +172,105 @@ function extractQueryParams() {
     return result;
 }
 
+
+/* ------------------------------------------------------------------ */
+/* DUMMY JOB DATA — kept in one place so it's easy to edit or remove.  */
+/* ------------------------------------------------------------------ */
+
+// Returns an array of dummy posting objects to prepend to the job list
+// (same shape SmartRecruiters returns for each item in jobs.content).
+function get_dummy_postings() {
+    return [{
+        "id": "700000000000001",
+        "name": "Data Science Manager (Multiple vacancies)",
+        "uuid": "fe4e0d60-38c3-42cd-8121-e1b2b06d910d",
+        "jobAdId": "16b9ff5b-8882-477f-927a-5aba72a72cc0",
+        "defaultJobAd": true,
+        "refNumber": "REF2994K",
+        "company": { "identifier": "Blend360", "name": "Blend360" },
+        "releasedDate": "2026-09-14T22:00:54.758Z",
+        "location": {
+            "city": "Columbia",
+            "region": "MD",
+            "country": "us",
+            "remote": true,
+            "hybrid": false,
+            "latitude": "39.2037144",
+            "longitude": "-76.86104619999999",
+            "fullLocation": "Columbia, MD, United States"
+        },
+        "industry": { "id": "marketing_and_advertising", "label": "Marketing And Advertising" },
+        "department": {},
+        "function": { "id": "business_development", "label": "Business Development" },
+        "typeOfEmployment": { "id": "permanent", "label": "Full-time" },
+        "experienceLevel": { "id": "mid_senior_level", "label": "Mid-Senior Level" },
+        "customField": [
+            { "fieldId": "65c5410215187e609d5ef598", "fieldLabel": "Function", "valueId": "3b73e969-e5d2-4c9d-9895-1119c082cae3", "valueLabel": "Data Science" },
+            { "fieldId": "61439683f32966646e734c68", "fieldLabel": "Brands", "valueId": "default", "valueLabel": "Blend360" },
+            { "fieldId": "COUNTRY", "fieldLabel": "Country/Region", "valueId": "us", "valueLabel": "United States" },
+            { "fieldId": "6197c9d823c5e76f39c4645f", "fieldLabel": "Service Line", "valueId": "d936cdba-9715-41ed-9248-7bf65a82d96d", "valueLabel": "AI Engineering and Science (AIES)" },
+            { "fieldId": "6197dcdf5c1dc670650a820b", "fieldLabel": "Work Location", "valueId": "665dc9c3-4baa-43e6-b0c6-36a3024ee063", "valueLabel": "Remote- US" },
+            { "fieldId": "64d643779bd8c41fcb4ceaa3", "fieldLabel": "Placement Type", "valueId": "e83b1ed0-2929-4bc5-a2ce-6d7c46c5fa6c", "valueLabel": "Core" },
+            { "fieldId": "65c540a028671f385bac4887", "fieldLabel": "Sub Service Line", "valueId": "c3d3d24b-5d75-4b27-aa16-cb8710be8449", "valueLabel": "Data Science" },
+            { "fieldId": "62fbb0e7a3d83d3289d54fc7", "fieldLabel": "Job Priority", "valueId": "80122639-0dab-4974-82e3-a0bff4e3d3c4", "valueLabel": "B" },
+            { "fieldId": "6197d79323c5e76f39c46463", "fieldLabel": "Region", "valueId": "757d06a5-0b5d-4861-b842-fe2bbb70ce73", "valueLabel": "NA" }
+        ],
+        "visibility": "PUBLIC",
+        "ref": "#",
+        "language": { "code": "en", "label": "English", "labelNative": "English (US)" }
+    }];
+}
+
+// A quick lookup of which ids are dummy/manual jobs — used both to fetch
+// their detail data and to decide special-case behavior (mailto apply, hide refer button).
+var dummy_job_ids = ["744000149451709", "744000149449470", "700000000000001"];
+
+function is_dummy_job(post_id) {
+    return dummy_job_ids.includes(String(post_id));
+}
+
+// Returns the full job-detail object (same shape as the single-posting API
+// response) for a dummy id, or null if post_id isn't one of ours.
+function get_dummy_job_detail(post_id) {
+    if (!is_dummy_job(post_id)) return null;
+
+    return {
+        "id": String(post_id),
+        "name": "Data Science Manager (Multiple vacancies)",
+        "active": true,
+        "location": {
+            "city": "Columbia",
+            "region": "MD",
+            "country": "us",
+            "remote": true,
+            "hybrid": false
+        },
+        "applyUrl": "#",
+        "referralUrl": "#",
+        "jobAd": {
+            "sections": {
+                "companyDescription": {
+                    "title": "Company Description",
+                    "text": "<p>Blend is a premier AI services provider, committed to co-creating meaningful impact for its clients through the power of data science, AI, technology, and people. With a mission to fuel bold visions, Blend tackles significant challenges by seamlessly aligning human expertise with artificial intelligence. The company is dedicated to unlocking value and fostering innovation for its clients by harnessing world-class people and data-driven strategy. We believe that the power of people and AI can have a meaningful impact on your world, creating more fulfilling work and projects for our people and clients. For more information, visit&#xa0;<a href=\"http://www.blend360.com/\" rel=\"noopener noreferrer\">www.blend360.com</a>.</p>"
+                },
+                "jobDescription": {
+                    "title": "Job Description",
+                    "text": "<p>Duties: Leads projects or workstreams that translate business problems into workable data science solutions, proposing different approaches and overseeing delivery of predictive analytics, models, and algorithms. Develops project plans, including milestones, dates, owners, risks, and contingency plans. Assembles and evaluates for applicability large, complex data sets from clients and external sources, managing the selection criteria and process for identifying the data and necessary data transformations that meet functional business requirements. Builds analytics tools to communicate actionable insights into customer acquisition, customer retention, margin improvement, operational efficiency, and other key business performance metrics. Performs data cleaning/hygiene and quality control, and integrates data from both client internal and external data sources on advanced data science platforms. Summarizes and describes data and data issues. Conducts statistical data analysis, including exploratory data analysis and data mining, and document key insights and findings toward decision-making. Trains, validates, and cross-validates predictive models and machine learning algorithms using state of the art data science techniques and tools. Documents predictive models/machine learning results that can be incorporated into client-deliverable documentation. Assists clients to deploy models and algorithms within their own architecture. Manages data analyst project work.</p><p>&#xa0;</p><p>Salary Range: $139,547-$160,000&#xa0;</p><p>Remote work permitted from any U.S. location. Domestic travel 10% of time to unanticipated client sites for meetings and project-related matters.</p><p>Apply to jobs@blend360.com w/ subject \u201cData Science Manager.\u201d</p><p>#BI-DNI</p>"
+                },
+                "qualifications": {
+                    "title": "Qualifications",
+                    "text": "<p>Requirements: Master\u2019s degree in Statistics, Mathematics, Computer Science, Data Science, Data Analytics, Business Analytics, or a related quantitative field. Two years of related work experience in advanced data science, to include two years of experience with each of the following predictive modeling and statistical analysis; advanced data science software languages and tools; query languages, semi-structured data, and relational databases, including query authoring and tuning; and cloud-based computing and storage platforms.</p>"
+                },
+                "additionalInformation": {
+                    "title": "Additional Information",
+                    "text": ""
+                }
+            }
+        }
+    };
+}
+
+/* ------------------------------------------------------------------ */
 
 
 //cards template
@@ -292,8 +388,6 @@ function getCountryFullName(short_name) {
 }
 
 function filter_jobs(input, from_loading = true, inverted = false) {
-    //$(".job-post-single-card:not(:lt(3))").fadeOut(); //keep only three card on search
-    //if(from_loading) $("#search-job").val(input);
     let search = input.toLowerCase();
     if (search == "early career") {
         inverted = true;
@@ -301,7 +395,7 @@ function filter_jobs(input, from_loading = true, inverted = false) {
     }
 
     const has_checked_checkboxes = $("input[data-filter-tag-group]:checked").length > 0 || false;
-    if (input == "") { //show all when empty search
+    if (input == "") {
         inverted = true;
     }
 
@@ -347,7 +441,7 @@ function filter_jobs(input, from_loading = true, inverted = false) {
         }
 
         (function() {
-            if (window.innerWidth > 991 || window.should_scroll_to_job_grid) { //only scroll on desktop
+            if (window.innerWidth > 991 || window.should_scroll_to_job_grid) {
                 window.should_scroll_to_job_grid = false;
                 setTimeout(function() {
                     $('html, body').animate({
@@ -374,16 +468,13 @@ function open_single_job(post_id) {
     let _url = new URL(window.location.href);
     let _current_url = _url.protocol + '//' + _url.host + _url.pathname;
 
+    var api_link = `https://api.smartrecruiters.com/v1/companies/Blend360/postings/${post_id}`;
     var link = `${_current_url}?id=${post_id}`;
     window.history.replaceState(null, null, link);
     $(".loading-overlay").fadeIn();
     $(".single-jobpost").fadeOut();
 
-    // Dummy result based on the real API response
-    const result = {"id":"700000000000001","name":"Data Science Manager (Multiple vacancies)","uuid":"fe4e0d60-38c3-42cd-8121-e1b2b06d910d","jobId":"5264ae71-fe01-4674-80ec-6d25d6de4364","jobAdId":"16b9ff5b-8882-477f-927a-5aba72a72cc0","defaultJobAd":true,"refNumber":"REF2994K","company":{"name":"Blend360","identifier":"Blend360"},"location":{"city":"Columbia","region":"MD","country":"us","remote":true,"hybrid":false,"latitude":"39.2037144","longitude":"-76.86104619999999","fullLocation":"Columbia, MD, United States"},"customField":[{"fieldId":"65c5410215187e609d5ef598","fieldLabel":"Function","valueId":"3b73e969-e5d2-4c9d-9895-1119c082cae3","valueLabel":"Data Science"},{"fieldId":"61439683f32966646e734c68","fieldLabel":"Brands","valueId":"default","valueLabel":"Blend360"},{"fieldId":"COUNTRY","fieldLabel":"Country/Region","valueId":"us","valueLabel":"United States"},{"fieldId":"6197c9d823c5e76f39c4645f","fieldLabel":"Service Line","valueId":"d936cdba-9715-41ed-9248-7bf65a82d96d","valueLabel":"AI Engineering and Science (AIES)"},{"fieldId":"6197dcdf5c1dc670650a820b","fieldLabel":"Work Location","valueId":"665dc9c3-4baa-43e6-b0c6-36a3024ee063","valueLabel":"Remote- US"},{"fieldId":"64d643779bd8c41fcb4ceaa3","fieldLabel":"Placement Type","valueId":"e83b1ed0-2929-4bc5-a2ce-6d7c46c5fa6c","valueLabel":"Core"},{"fieldId":"65c540a028671f385bac4887","fieldLabel":"Sub Service Line","valueId":"c3d3d24b-5d75-4b27-aa16-cb8710be8449","valueLabel":"Data Science"},{"fieldId":"62fbb0e7a3d83d3289d54fc7","fieldLabel":"Job Priority","valueId":"80122639-0dab-4974-82e3-a0bff4e3d3c4","valueLabel":"B"},{"fieldId":"6197d79323c5e76f39c46463","fieldLabel":"Region","valueId":"757d06a5-0b5d-4861-b842-fe2bbb70ce73","valueLabel":"NA"}],"releasedDate":"2026-09-14T22:00:54.758Z","creator":{"name":"","avatarUrl":""},"postingUrl":"#","applyUrl":"#","referralUrl":"#","jobAd":{"sections":{"companyDescription":{"title":"Company Description","text":"<p>Blend is a premier AI services provider, committed to co-creating meaningful impact for its clients through the power of data science, AI, technology, and people. With a mission to fuel bold visions, Blend tackles significant challenges by seamlessly aligning human expertise with artificial intelligence. The company is dedicated to unlocking value and fostering innovation for its clients by harnessing world-class people and data-driven strategy. We believe that the power of people and AI can have a meaningful impact on your world, creating more fulfilling work and projects for our people and clients. For more information, visit&#xa0;<a href=\"http://www.blend360.com/\" rel=\"noopener noreferrer\">www.blend360.com</a>.</p>"},"jobDescription":{"title":"Job Description","text":"<p>Duties: Leads projects or workstreams that translate business problems into workable data science solutions, proposing different approaches and overseeing delivery of predictive analytics, models, and algorithms. Develops project plans, including milestones, dates, owners, risks, and contingency plans. Assembles and evaluates for applicability large, complex data sets from clients and external sources, managing the selection criteria and process for identifying the data and necessary data transformations that meet functional business requirements. Builds analytics tools to communicate actionable insights into customer acquisition, customer retention, margin improvement, operational efficiency, and other key business performance metrics. Performs data cleaning/hygiene and quality control, and integrates data from both client internal and external data sources on advanced data science platforms. Summarizes and describes data and data issues. Conducts statistical data analysis, including exploratory data analysis and data mining, and document key insights and findings toward decision-making. Trains, validates, and cross-validates predictive models and machine learning algorithms using state of the art data science techniques and tools. Documents predictive models/machine learning results that can be incorporated into client-deliverable documentation. Assists clients to deploy models and algorithms within their own architecture. Manages data analyst project work.</p><p>&#xa0;</p><p>Salary Range: $139,547-$160,000&#xa0;</p><p>Remote work permitted from any U.S. location. Domestic travel 10% of time to unanticipated client sites for meetings and project-related matters.</p><p>Apply to jobs@blend360.com w/ subject \u201cData Science Manager.\u201d</p><p>#BI-DNI</p>"},"qualifications":{"title":"Qualifications","text":"<p>Requirements: Master\u2019s degree in Statistics, Mathematics, Computer Science, Data Science, Data Analytics, Business Analytics, or a related quantitative field. Two years of related work experience in advanced data science, to include two years of experience with each of the following predictive modeling and statistical analysis; advanced data science software languages and tools; query languages, semi-structured data, and relational databases, including query authoring and tuning; and cloud-based computing and storage platforms.</p>"},"additionalInformation":{"title":"Additional Information","text":""}}},"compensation":{"min":139547,"max":160000,"currency":"USD","period":"YEARLY"},"active":true,"visibility":"PUBLIC","industry":{"id":"marketing_and_advertising","label":"Marketing And Advertising"},"function":{"id":"business_development","label":"Business Development"},"experienceLevel":{"id":"mid_senior_level","label":"Mid-Senior Level"},"typeOfEmployment":{"id":"permanent","label":"Full-time"},"language":{"code":"en","label":"English","labelNative":"English (US)"}};
-
-    // Simulate async delay so loading/fade behavior still feels natural
-    setTimeout(function() {
+    function render_job(result) {
         if (!result.active) {
             $(".job-info-flex").css("display", "none");
             $(".job-not-found-div").show();
@@ -401,31 +492,27 @@ function open_single_job(post_id) {
         }
 
         $(".job-description-div").html(job_info);
-
         $("#job-title-h1-header").text(result.name);
         $("#job-location-text").html(`${result.location.city}, ${result.location.region}; <span style="text-transform:uppercase;">${result.location.country}</span> <br> ${result.location.remote ? "Remote" : "On-site"}`);
 
-        if (post_id == 744000149451709 || post_id == 744000149449470 || post_id == 700000000000001) {
+        if (is_dummy_job(post_id)) {
             $("#apply-button").attr('href', "mailto:jobs@blend360.com");
+            $("#refer-button").css('display', 'none');
         } else {
             $("#apply-button").attr('href', result.applyUrl);
-        }
-
-        if (post_id == 744000149451709 || post_id == 744000149449470 || post_id == 700000000000001) {
-            $("#refer-button").css('display', 'none');
-        }else{
             $("#refer-button").attr('href', result.referralUrl);
         }
-        
 
         const share_link = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&amp;src=sdkpreparse`;
         $('.facebook-share').attr('href', share_link);
-        $('.x-share').attr('href', `https://twitter.com/share?text=Job%20at%20Blend&url=${encodeURIComponent(link)}`);
-        $('.linkedin-share').attr('href', `https://linkedin.com/shareArticle?url=${encodeURIComponent(link)}&title=Job%20at%20Blend`);
+        $('.x-share').attr('href', `https://twitter.com/share?text=Job%20at%20Blend&url=${encodeURIComponent(link)}`)
+        $('.linkedin-share').attr('href', `https://linkedin.com/shareArticle?url=${encodeURIComponent(link)}&title=Job%20at%20Blend`)
 
         $(".job-info-flex").css("display", "flex");
         $(".job-not-found-div").hide();
+    }
 
+    function finish_up() {
         $(".loading-overlay").fadeOut();
         $(".movable-content-wrapper").hide();
         $(".single-jobpost").fadeIn();
@@ -434,7 +521,24 @@ function open_single_job(post_id) {
             left: 0,
             behavior: "smooth",
         });
-    }, 300);
+    }
+
+    // Serve dummy job detail without hitting the API at all
+    const dummy_detail = get_dummy_job_detail(post_id);
+    if (dummy_detail) {
+        render_job(dummy_detail);
+        finish_up();
+        return;
+    }
+
+    $.get(api_link).done(function(result) {
+        render_job(result);
+    }).fail(function(e) {
+        $(".job-info-flex").css("display", "none");
+        $(".job-not-found-div").show();
+    }).always(function() {
+        finish_up();
+    })
 }
 
 function addjobdescription(id) {
@@ -447,6 +551,17 @@ function addjobdescription(id) {
                 $(`#${id} .job-description-caption p`).text($txt);
                 return;
             }
+
+            // Dummy jobs never come from the API, so pull straight from the dummy detail
+            if (is_dummy_job(id)) {
+                const dummy_detail = get_dummy_job_detail(id);
+                if (dummy_detail) {
+                    $txt = $(dummy_detail.jobAd.sections.jobDescription.text).text();
+                    $(`#${id} .job-description-caption p`).text($txt);
+                }
+                return;
+            }
+
             fetch(`https://api.smartrecruiters.com/v1/companies/Blend360/postings/${id}`)
                 .then(response => {
                     if (!response.ok) {
@@ -468,7 +583,6 @@ function addjobdescription(id) {
 }
 
 function toCamelCaseNoSpace(inputString) {
-    // Remove spaces and convert to camel case
     return inputString.replace(/\s+/g, '').replace(/(?:^\w|[A-Z]|\b\w)/g, function(match, index) {
         return index === 0 ? match.toLowerCase() : match.toUpperCase();
     });
@@ -525,27 +639,26 @@ window.should_scroll_to_job_grid = false;
 
 var search_database = [];
 var query_params = extractQueryParams() || {};
-var detected_search_query = Object.keys(query_params).length === 0 ? false : true; // this will prevent us from showing more cards before the search perfoms
+var detected_search_query = Object.keys(query_params).length === 0 ? false : true;
 let miniSearch = new MiniSearch({
-    fields: ['name', 'type', 'typeOfE', 'city', 'country_short', 'country_full', 'continent', 'level', 'industry', 'department', 'job_function', ], // fields to index for full-text search
-    storeFields: ['name'] // fields to return with search results
+    fields: ['name', 'type', 'typeOfE', 'city', 'country_short', 'country_full', 'continent', 'level', 'industry', 'department', 'job_function', ],
+    storeFields: ['name']
 })
 
 function build_smart_recruiter_job_board(jobs) {
-    if (jobs.totalFound > limit) { //make sure we start navigation if enough data
-        //we need cursor
+    if (jobs.totalFound > limit) {
         let current_cursor = jobs.offset;
-        let max_offset = Math.ceil(jobs.totalFound / limit) - 1; //index start at 0
+        let max_offset = Math.ceil(jobs.totalFound / limit) - 1;
         let prev_cursor = current_cursor - 1;
         let next_cursor = current_cursor + 1;
         console.log({ current_cursor, max_offset, prev_cursor, next_cursor })
         const current_location = window.location.origin + window.location.pathname;
-        if (prev_cursor >= 0) { //we need prev
+        if (prev_cursor >= 0) {
             $(".cursor-prev-button").css("display", "block");
             $(".cursor-prev-button").attr("href", `${current_location}?offset=${prev_cursor}&limit=${limit}`);
         }
 
-        if (next_cursor <= max_offset) { //we need next
+        if (next_cursor <= max_offset) {
             const o = (jobs.totalFound - (next_cursor * limit)) % jobs.totalFound;
             const _limit = o < limit ? o : limit;
             $(".cursor-next-button").css("display", "block");
@@ -562,7 +675,6 @@ function build_smart_recruiter_job_board(jobs) {
             n_opening++;
             const obj = {}
             for (tag of opening.customField) {
-                //const camelCasedLabel = toCamelCaseNoSpace(tag.fieldLabel);
                 let vlabel = tag.valueLabel
                 if (tag.fieldLabel == "Management Level")
                     vlabel = experience_level_mapping[tag.valueLabel] && tag.fieldLabel == "Management Level" ? experience_level_mapping[tag.valueLabel] : tag.valueLabel;
@@ -578,7 +690,6 @@ function build_smart_recruiter_job_board(jobs) {
                     tags_database[tag.fieldLabel].push(vlabel);
                 }
             }
-            //debugger;
             cards.push(card_template({
                 key: opening.id,
                 job_title: opening.name,
@@ -627,12 +738,8 @@ function build_smart_recruiter_job_board(jobs) {
             $(".filter-tags-form").html(tags_html.reverse().join("<br>"))
         })
 
-        // $("input[data-filter-tag-for]").on("change", function() {
-        //   alert($(this).prop("checked"))
-        // })
-
         $('.number-of-jobs').text(n_opening);
-        miniSearch.addAll(search_database); //initialize all the database with all jobs      
+        miniSearch.addAll(search_database);
         const n_exsting = $('.job-list-cards-grid').children().length
         let to_rem = 0;
         if (n_opening < 3) {
@@ -642,7 +749,7 @@ function build_smart_recruiter_job_board(jobs) {
             $('.job-list-cards-grid').children().eq(x).remove();
         }
 
-        if (detected_search_query) { //scroll to the jobs section
+        if (detected_search_query) {
             $('html, body').animate({
                 scrollTop: $(".job-list-cards-grid").offset().top - 280
             }, 2000);
@@ -653,7 +760,7 @@ function build_smart_recruiter_job_board(jobs) {
                 setTimeout(function() {
                     const el = $(cards[index])
                     if (detected_search_query && index >= 3) {
-                        el.addClass('hidden'); //show 3 cards when search need to populate
+                        el.addClass('hidden');
                     }
 
                     if (index < n_exsting) {
@@ -661,13 +768,13 @@ function build_smart_recruiter_job_board(jobs) {
                         card_grid.children().eq(index).replaceWith(outerHtml);
                         addjobdescription($(outerHtml).attr("id"))
                     } else {
-                        card_grid.append(el); // Append new elements
+                        card_grid.append(el);
                         addjobdescription($(el).attr("id"));
                     }
                     setTimeout(function() {
-                        if (!in_search_from_url) { //dont hide the loader untill search perfoms
+                        if (!in_search_from_url) {
                             $('.skeleton-loading').eq(index).fadeOut();
-                        } else if (index == (n_opening - 1)) { //we are reaching the end
+                        } else if (index == (n_opening - 1)) {
                             if (query_params.search) {
                                 filter_jobs(query_params.search, true);
                             } else {
@@ -675,7 +782,7 @@ function build_smart_recruiter_job_board(jobs) {
                             }
                         }
 
-                        if (index == (n_opening - 1)) { //end of loop, set button actions
+                        if (index == (n_opening - 1)) {
                             $(".open-role-card-cta").css({ "cursor": "pointer", "opacity": 1 }).attr("inactive", false);
                             $("#reset-filters").removeAttr("href").attr("onclick", 'reset_filters_selection()')
                             $("#open-america-jobs").removeAttr("href").click(function(event) {
@@ -683,7 +790,6 @@ function build_smart_recruiter_job_board(jobs) {
                                 const currBtn = $(this);
                                 currBtn.attr("inactive", true);
                                 window.should_scroll_to_job_grid = true;
-                                //filter_jobs("America & Europe", true); //true for scrolling down
                                 reset_filters_selection(false).then(function() {
                                     for (const k in activated_filters) {
                                         activated_filters[k] = [];
@@ -697,8 +803,8 @@ function build_smart_recruiter_job_board(jobs) {
                                             $(el).parents("form").get(0).scrollIntoView();
                                             currBtn.attr("inactive", false);
                                         }, 2000);
-                                    } else { //element dont exist but we have to scroll to the job board
-                                        if (window.innerWidth > 991 || window.should_scroll_to_job_grid) { //only scroll on desktop
+                                    } else {
+                                        if (window.innerWidth > 991 || window.should_scroll_to_job_grid) {
                                             window.should_scroll_to_job_grid = false;
                                             setTimeout(function() {
                                                 $('html, body').animate({
@@ -729,8 +835,8 @@ function build_smart_recruiter_job_board(jobs) {
                                             $(el).parents("form").get(0).scrollIntoView();
                                             currBtn.attr("inactive", false);
                                         }, 2000);
-                                    } else { //element dont exist but we have to scroll to the job board
-                                        if (window.innerWidth > 991 || window.should_scroll_to_job_grid) { //only scroll on desktop
+                                    } else {
+                                        if (window.innerWidth > 991 || window.should_scroll_to_job_grid) {
                                             window.should_scroll_to_job_grid = false;
                                             setTimeout(function() {
                                                 $('html, body').animate({
@@ -761,8 +867,8 @@ function build_smart_recruiter_job_board(jobs) {
                                             $(el).parents("form").get(0).scrollIntoView();
                                             currBtn.attr("inactive", false);
                                         }, 2000);
-                                    } else { //element dont exist but we have to scroll to the job board
-                                        if (window.innerWidth > 991 || window.should_scroll_to_job_grid) { //only scroll on desktop
+                                    } else {
+                                        if (window.innerWidth > 991 || window.should_scroll_to_job_grid) {
                                             window.should_scroll_to_job_grid = false;
                                             setTimeout(function() {
                                                 $('html, body').animate({
@@ -775,7 +881,7 @@ function build_smart_recruiter_job_board(jobs) {
                                 });
                             })
 
-														 $("#open-asia-jobs").removeAttr("href").click(function(event) {
+                            $("#open-asia-jobs").removeAttr("href").click(function(event) {
                                 event.preventDefault();
                                 const currBtn = $(this);
                                 currBtn.attr("inactive", true);
@@ -793,8 +899,8 @@ function build_smart_recruiter_job_board(jobs) {
                                             $(el).parents("form").get(0).scrollIntoView();
                                             currBtn.attr("inactive", false);
                                         }, 2000);
-                                    } else { //element dont exist but we have to scroll to the job board
-                                        if (window.innerWidth > 991 || window.should_scroll_to_job_grid) { //only scroll on desktop
+                                    } else {
+                                        if (window.innerWidth > 991 || window.should_scroll_to_job_grid) {
                                             window.should_scroll_to_job_grid = false;
                                             setTimeout(function() {
                                                 $('html, body').animate({
@@ -832,8 +938,8 @@ function build_smart_recruiter_job_board(jobs) {
                                             setTimeout(function() {
                                                 $(el).parents("form").get(0).scrollIntoView();
                                             }, 2000);
-                                        } else { //element dont exist but we have to scroll to the job board
-                                            if (window.innerWidth > 991 || window.should_scroll_to_job_grid) { //only scroll on desktop
+                                        } else {
+                                            if (window.innerWidth > 991 || window.should_scroll_to_job_grid) {
                                                 window.should_scroll_to_job_grid = false;
                                                 setTimeout(function() {
                                                     $('html, body').animate({
@@ -858,8 +964,8 @@ function build_smart_recruiter_job_board(jobs) {
                                             setTimeout(function() {
                                                 $(el).parents("form").get(0).scrollIntoView();
                                             }, 2000);
-                                        } else { //element dont exist but we have to scroll to the job board
-                                            if (window.innerWidth > 991 || window.should_scroll_to_job_grid) { //only scroll on desktop
+                                        } else {
+                                            if (window.innerWidth > 991 || window.should_scroll_to_job_grid) {
                                                 window.should_scroll_to_job_grid = false;
                                                 setTimeout(function() {
                                                     $('html, body').animate({
@@ -898,8 +1004,8 @@ function build_smart_recruiter_job_board(jobs) {
                                             setTimeout(function() {
                                                 $(parent).parents("form").get(0).scrollIntoView();
                                             }, 2000);
-                                        } else { //element dont exist but we have to scroll to the job board
-                                            if (window.innerWidth > 991 || window.should_scroll_to_job_grid) { //only scroll on desktop
+                                        } else {
+                                            if (window.innerWidth > 991 || window.should_scroll_to_job_grid) {
                                                 window.should_scroll_to_job_grid = false;
                                                 setTimeout(function() {
                                                     $('html, body').animate({
@@ -920,8 +1026,7 @@ function build_smart_recruiter_job_board(jobs) {
                                 }
                             }
                         }
-                        if (index == (n_opening - 1) && preload_job != false) { //end of loop, check if no job to preopulate
-                            //open_single_job(preload_job); //for optimization this is called now in the extractQueryParams function
+                        if (index == (n_opening - 1) && preload_job != false) {
                         }
                     }, 10 + (2 * index));
                 }, 10 + (2 * index));
@@ -936,19 +1041,16 @@ $(function() { //DOMContentLoaded instead of "load" to fasten the process
     window.expiredStorage = new ExpiredStorage();
     let cached_response = window.expiredStorage.getItem(key);
 
-    const dummy_posting = {"id":"700000000000001","name":"Data Science Manager (Multiple vacancies)","uuid":"fe4e0d60-38c3-42cd-8121-e1b2b06d910d","jobAdId":"16b9ff5b-8882-477f-927a-5aba72a72cc0","defaultJobAd":true,"refNumber":"REF2994K","company":{"identifier":"Blend360","name":"Blend360"},"releasedDate":"2026-09-14T22:00:54.758Z","location":{"city":"Columbia","region":"MD","country":"us","remote":true,"hybrid":false,"latitude":"39.2037144","longitude":"-76.86104619999999","fullLocation":"Columbia, MD, United States"},"industry":{"id":"marketing_and_advertising","label":"Marketing And Advertising"},"department":{},"function":{"id":"business_development","label":"Business Development"},"typeOfEmployment":{"id":"permanent","label":"Full-time"},"experienceLevel":{"id":"mid_senior_level","label":"Mid-Senior Level"},"customField":[{"fieldId":"65c5410215187e609d5ef598","fieldLabel":"Function","valueId":"3b73e969-e5d2-4c9d-9895-1119c082cae3","valueLabel":"Data Science"},{"fieldId":"61439683f32966646e734c68","fieldLabel":"Brands","valueId":"default","valueLabel":"Blend360"},{"fieldId":"COUNTRY","fieldLabel":"Country/Region","valueId":"us","valueLabel":"United States"},{"fieldId":"6197c9d823c5e76f39c4645f","fieldLabel":"Service Line","valueId":"d936cdba-9715-41ed-9248-7bf65a82d96d","valueLabel":"AI Engineering and Science (AIES)"},{"fieldId":"6197dcdf5c1dc670650a820b","fieldLabel":"Work Location","valueId":"665dc9c3-4baa-43e6-b0c6-36a3024ee063","valueLabel":"Remote- US"},{"fieldId":"64d643779bd8c41fcb4ceaa3","fieldLabel":"Placement Type","valueId":"e83b1ed0-2929-4bc5-a2ce-6d7c46c5fa6c","valueLabel":"Core"},{"fieldId":"65c540a028671f385bac4887","fieldLabel":"Sub Service Line","valueId":"c3d3d24b-5d75-4b27-aa16-cb8710be8449","valueLabel":"Data Science"},{"fieldId":"62fbb0e7a3d83d3289d54fc7","fieldLabel":"Job Priority","valueId":"80122639-0dab-4974-82e3-a0bff4e3d3c4","valueLabel":"B"},{"fieldId":"6197d79323c5e76f39c46463","fieldLabel":"Region","valueId":"757d06a5-0b5d-4861-b842-fe2bbb70ce73","valueLabel":"NA"}],"visibility":"PUBLIC","ref":"#","language":{"code":"en","label":"English","labelNative":"English (US)"}};
-    
-
     if (cached_response && cached_response !== null) {
         cached_response = JSON.parse(cached_response);
-        cached_response.content.unshift(dummy_posting); // add dummy before loop
+        cached_response.content.unshift(...get_dummy_postings()); // add dummy job(s) before the loop
         build_smart_recruiter_job_board(cached_response);
         return;
     }
 
     $.get(job_url).done(function(jobs) {
         window.expiredStorage.setItem(key, JSON.stringify(jobs), 3600); //after 1hour
-        jobs.content.unshift(dummy_posting); // add dummy before loop
+        jobs.content.unshift(...get_dummy_postings()); // add dummy job(s) before the loop
         build_smart_recruiter_job_board(jobs);
     });
 });
@@ -956,9 +1058,8 @@ $(function() { //DOMContentLoaded instead of "load" to fasten the process
 
 $(function() {
     $("#search-job").keydown(function(event) {
-        // Check if the pressed key is Enter (key code 13)
         if (event.keyCode === 13) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault();
             if (!$("#start_search").prop("disabled")) filter_jobs(event.target.value, false)
         }
     });
@@ -981,7 +1082,7 @@ $(function() {
             $('html, body').animate({
                 scrollTop: $(".job-list-cards-grid").offset().top - 280
             }, 2000);
-        }); //show job post only
+        });
         let _url = new URL(window.location.href);
         let _current_url = _url.protocol + '//' + _url.host + _url.pathname;
         window.history.replaceState(null, null, _current_url);
