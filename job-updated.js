@@ -494,14 +494,13 @@ function open_single_job(post_id) {
         $(".job-description-div").html(job_info);
         $("#job-title-h1-header").text(result.name);
         $("#job-location-text").html(`${result.location.city}, ${result.location.region}; <span style="text-transform:uppercase;">${result.location.country}</span> <br> ${result.location.remote ? "Remote" : "On-site"}`);
-
+    console.log("refer update");
         if (is_dummy_job(post_id)) {
             $("#apply-button").attr('href', "mailto:jobs@blend360.com");
-            $("#refer-button").css('display', 'none');
+            $("#refer-button").hide();
         } else {
             $("#apply-button").attr('href', result.applyUrl);
-            $("#refer-button").attr('href', result.referralUrl);
-            $("#refer-button").css('display', 'block');
+            $("#refer-button").show().attr('href', result.referralUrl);
         }
 
         const share_link = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&amp;src=sdkpreparse`;
